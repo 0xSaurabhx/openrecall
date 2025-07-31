@@ -186,7 +186,15 @@ if __name__ == "__main__":
     print(f"Appdata folder: {appdata_folder}")
 
     # Start the thread to record screenshots
-    t = Thread(target=record_screenshots_thread)
-    t.start()
+    print("🚀 Starting screenshot thread...")
+    try:
+        t = Thread(target=record_screenshots_thread)
+        t.daemon = True  # Make it a daemon thread so it closes with main process
+        t.start()
+        print("✓ Screenshot thread started successfully")
+    except Exception as e:
+        print(f"❌ Failed to start screenshot thread: {e}")
+        import traceback
+        traceback.print_exc()
 
     app.run(port=8082)
